@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Band Name Generator</title>
+    
+    <!-- PyScript includes (latest stable version) -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+    <h1>Band Name Generator</h1>
+    <p>Type commands in the Python REPL below. This is all running in your browser!</p>
+
+    <!--
+      py-repl creates an interactive console.
+      We'll just paste your code in here.
+      When a user clicks "Run", it will ask for inputs and print results.
+    -->
+    <py-repl>
+city = input("What is the city you were born in?\n")
+pet = input("What is your pet's name?\n")
+print(f"Your band name could be {city} {pet}")
+    </py-repl>
+
+    <!--
+      Alternatively, if you want a button-based approach
+      with HTML input fields, you'd do it differently.
+      But let's keep it simple with a REPL.
+    -->
+  </body>
+</html>
