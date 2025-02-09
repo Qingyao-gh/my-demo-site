@@ -26,4 +26,7 @@ button {
   border-radius: 5px;
   overflow-y: auto;
   white-space: pre-wrap; /* Keep the ASCII art formatted nicely */
+
+  /* Increase font size here */
+  font-size: 18px;
 }
