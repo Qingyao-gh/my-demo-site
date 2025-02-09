@@ -1,15 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Testing PyScript</title>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-  </head>
-  <body>
-    <h1>Testing PyScript</h1>
-    <py-script>
-      print("Hello from PyScript!")
-    </py-script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Rock Paper Scissors</title>
+  <!-- Load PyScript -->
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  
+  <!-- Some basic styling -->
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 30px;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    py-terminal {
+      background: #222;
+      color: #eee;
+      padding: 10px;
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: 250px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Rock Paper Scissors Game</h1>
+  <p>Select an option below to play:</p>
+
+  <!-- Buttons that call the Python function via PyScript -->
+  <button py-click="play_game(0)">Rock</button>
+  <button py-click="play_game(1)">Paper</button>
+  <button py-click="play_game(2)">Scissors</button>
+
+  <!-- A PyScript REPL/Terminal to show results -->
+  <py-terminal></py-terminal>
+
+  <!-- Your Python code embedded in PyScript -->
+  <py-script>
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+list_of_choices = [rock, paper, scissors]
+
+import random
+
+wins_over = {
+    rock: scissors,
+    paper: rock,
+    scissors: paper
+}
+
+def play_game(your_choice_index: int):
+    # Player’s choice
+    your_choice = list_of_choices[your_choice_index]
+    print(f"Your choice:\n{your_choice}")
+
+    # Computer’s choice
+    computer_choice = random.choice(list_of_choices)
+    print(f"Computer chose:\n{computer_choice}")
+
+    # Determine the result
+    if your_choice == computer_choice:
+        print("It is a tie.")
+    elif wins_over[your_choice] == computer_choice:
+        print("You win!")
+    else:
+        print("Computer wins!")
+
+print("Ready to play? Choose Rock, Paper, or Scissors above!")
+  </py-script>
+
+</body>
 </html>
