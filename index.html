@@ -1,51 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Rock Paper Scissors</title>
-  <!-- Load PyScript -->
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-  
-  <!-- Minimal styling for clarity -->
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 30px;
-      background-color: #f8f8f8;
-    }
-    h1 {
-      color: #333;
-    }
-    button {
-      font-size: 16px;
-      padding: 10px 15px;
-      cursor: pointer;
-      margin-bottom: 20px;
-    }
-    py-terminal {
-      background: #222;
-      color: #eee;
-      padding: 10px;
-      width: 100%;
-      max-width: 600px;
-      height: 250px;
-      overflow-y: auto;
-      display: block;
-    }
-  </style>
+
+  <!-- 1) Include Brython libraries -->
+  <script defer src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
+
+  <!-- 2) Link to your external CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="brython()">
 
   <h1>Rock Paper Scissors</h1>
-  <!-- One "Run" button only -->
-  <button py-click="play_rps()">Run</button>
+  <button id="runBtn">Run</button>
+  
+  <!-- Where the output will appear -->
+  <div id="consoleOutput"></div>
 
-  <!-- Console area where output and prompts will appear -->
-  <py-terminal></py-terminal>
-
-  <!-- Your Python code embedded via PyScript -->
-  <py-script>
+  <!-- 3) Put your Python code inside a <script type="text/python"> tag -->
+  <script type="text/python">
 import random
+from browser import document, html, window
 
 rock = '''
     _______
@@ -82,24 +59,42 @@ wins_over = {
     scissors: paper
 }
 
-def play_rps():
-    # Ask the user for their choice (0, 1, or 2) in the PyScript console
-    your_choice_index = int(input("What do you choose? Type 0 for Rock, 1 for Paper, or 2 for Scissors:\n"))
-    your_choice = list_of_choices[your_choice_index]
-    print(f"\nYour choice:\n{your_choice}")
+def play_game(ev):
+    # "consoleOutput" is the <div> where we’ll display results
+    console_area = document["consoleOutput"]
+    # Clear old results each time
+    console_area.clear()
 
-    # Computer makes a random choice
-    computer_choice = random.choice(list_of_choices)
-    print(f"Computer chose:\n{computer_choice}")
+    # Pop up a browser prompt for user input
+    user_input = window.prompt("What do you choose? Type 0 for Rock, 1 for Paper, or 2 for Scissors:")
 
-    # Determine the result
-    if your_choice == computer_choice:
-        print("It is a tie.")
-    elif wins_over[your_choice] == computer_choice:
-        print("You win!")
-    else:
-        print("Computer wins!")
-  </py-script>
+    # If user cancels or doesn't type anything
+    if not user_input:
+        console_area <= html.P("No input provided.")
+        return
+
+    # Try to convert the input to an integer
+    try:
+        your_choice_index = int(user_input)
+        your_choice = list_of_choices[your_choice_index]
+        console_area <= html.P(f"Your choice:\n{your_choice}")
+        
+        computer_choice = random.choice(list_of_choices)
+        console_area <= html.P(f"Computer chose:\n{computer_choice}")
+
+        if your_choice == computer_choice:
+            console_area <= html.P("It is a tie.")
+        elif wins_over[your_choice] == computer_choice:
+            console_area <= html.P("You win!")
+        else:
+            console_area <= html.P("Computer wins!")
+
+    except ValueError:
+        console_area <= html.P("Invalid input. Please enter 0, 1, or 2.")
+
+# Bind the button click to our `play_game` function
+document["runBtn"].bind("click", play_game)
+  </script>
 
 </body>
 </html>
