@@ -6,7 +6,7 @@
   <!-- Load PyScript -->
   <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   
-  <!-- Some basic styling -->
+  <!-- Minimal styling for clarity -->
   <style>
     body {
       font-family: sans-serif;
@@ -17,38 +17,36 @@
       color: #333;
     }
     button {
-      margin-right: 10px;
-      padding: 10px;
+      font-size: 16px;
+      padding: 10px 15px;
       cursor: pointer;
+      margin-bottom: 20px;
     }
     py-terminal {
       background: #222;
       color: #eee;
       padding: 10px;
-      display: block;
       width: 100%;
       max-width: 600px;
       height: 250px;
       overflow-y: auto;
-      margin-top: 20px;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <h1>Rock Paper Scissors Game</h1>
-  <p>Select an option below to play:</p>
+  <h1>Rock Paper Scissors</h1>
+  <!-- One "Run" button only -->
+  <button py-click="play_rps()">Run</button>
 
-  <!-- Buttons that call the Python function via PyScript -->
-  <button py-click="play_game(0)">Rock</button>
-  <button py-click="play_game(1)">Paper</button>
-  <button py-click="play_game(2)">Scissors</button>
-
-  <!-- A PyScript REPL/Terminal to show results -->
+  <!-- Console area where output and prompts will appear -->
   <py-terminal></py-terminal>
 
-  <!-- Your Python code embedded in PyScript -->
+  <!-- Your Python code embedded via PyScript -->
   <py-script>
+import random
+
 rock = '''
     _______
 ---'   ____)
@@ -78,20 +76,19 @@ scissors = '''
 
 list_of_choices = [rock, paper, scissors]
 
-import random
-
 wins_over = {
     rock: scissors,
     paper: rock,
     scissors: paper
 }
 
-def play_game(your_choice_index: int):
-    # Player’s choice
+def play_rps():
+    # Ask the user for their choice (0, 1, or 2) in the PyScript console
+    your_choice_index = int(input("What do you choose? Type 0 for Rock, 1 for Paper, or 2 for Scissors:\n"))
     your_choice = list_of_choices[your_choice_index]
-    print(f"Your choice:\n{your_choice}")
+    print(f"\nYour choice:\n{your_choice}")
 
-    # Computer’s choice
+    # Computer makes a random choice
     computer_choice = random.choice(list_of_choices)
     print(f"Computer chose:\n{computer_choice}")
 
@@ -102,8 +99,6 @@ def play_game(your_choice_index: int):
         print("You win!")
     else:
         print("Computer wins!")
-
-print("Ready to play? Choose Rock, Paper, or Scissors above!")
   </py-script>
 
 </body>
