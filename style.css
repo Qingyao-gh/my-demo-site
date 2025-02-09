@@ -20,13 +20,11 @@ button {
   background-color: #1e1e1e;
   color: #dcdcdc;
   padding: 10px;
-  min-height: 150px;
-  width: 100%;
-  max-width: 600px;
+  min-height: 400px;   /* Increase the minimum height */
+  width: 80%;          /* Make the container wider */
+  max-width: 800px;    /* Or set a bigger max width if you prefer a limit */
   border-radius: 5px;
   overflow-y: auto;
   white-space: pre-wrap; /* Keep the ASCII art formatted nicely */
-
-  /* Increase font size here */
-  font-size: 18px;
+  font-size: 18px; /* Optional: Increase font size as well */
 }
